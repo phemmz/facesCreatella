@@ -1,3 +1,80 @@
-h1 {
-  background: red;
+body {
+  margin: 0;
+  font-family: 'Nanum Myeongjo', serif;
+}
+
+.home-container {
+  display: grid;
+  grid-template: 1fr / 13rem 1rem 1fr;
+  height: 100vh;
+  background: #f7f7f7;
+
+  aside {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 1;
+    background: #defbe1cc;
+  }
+
+  section {
+    grid-row: 1 / span 1;
+    grid-column: 3 / span 1;
+    display: grid;
+    grid-template: 4rem 39rem 1rem / 1fr 2rem;
+
+    header {
+      grid-row: 1 / span 1;
+      grid-column: 1 / span 2;
+    }
+
+    .product-list {
+      grid-row: 2 / span 1;
+      grid-column: 1 / span 1;
+      display: grid;
+      grid-template: 11.5rem 11.5rem 11.5rem / 1fr 1fr 1fr;
+      grid-gap: 2rem 1rem;
+      overflow-y: auto;
+
+      .product-card {
+        width: 18.9rem;
+        height: 11.7rem;
+        margin-left: 1rem;
+        box-shadow:  0 0.2rem 1.2rem rgba(0, 0, 0, 0.2);
+        background: #eae9e9;
+        border-radius: 1rem;
+        display: grid;
+        grid-template: 3rem 6.7rem 2rem / 3rem 1fr 3rem;
+      }
+
+      .product-card:hover {
+        box-shadow: 0 2.2rem 3.2rem rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+.product-face {
+  grid-row: 2 / span 1;
+  grid-column: 2 / span 1;
+  text-align: center;
+}
+
+.product-size {
+  grid-row: 3 / span 1;
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.product-price {
+  grid-row: 3 / span 1;
+  grid-column:  2 / span 1;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.product-date {
+  grid-row: 3 / span 1;
+  grid-column:  3 / span 1;
+  text-align: center;
+  font-size: 0.8rem;
 }
