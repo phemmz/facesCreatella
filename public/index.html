@@ -2,6 +2,10 @@
 <html>
     <head>
         <title>Products Grid</title>
+        <meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+        <link rel="stylesheet" href="/styles.css" type="text/css">
     </head>
     <body>
         <header>
@@ -12,8 +16,9 @@
             <p>But first, a word from our sponsors:</p> <script>document.write('<img class="ad" src="/ads/?r=' + Math.floor(Math.random()*1000) + '"/>');</script>
         </header>
 
-        <section class="products">
+        <section id="root" class="products">
             ... products go here ...
         </section>
+        <script src="./bundle.js"></script>
     </body>
 </html>
