@@ -1,9 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom';
 
+import Home from './Components/Home/Home';
 import './styles.scss';
 
 render(
-  <h1>Hello, world! Go</h1>,
+  <Home />,
   document.getElementById('root')
 );
