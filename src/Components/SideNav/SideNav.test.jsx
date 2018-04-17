@@ -5,7 +5,8 @@ import { wrap } from 'module';
 
 describe('SideNav Component', () => {
   const props = {
-    sortProducts: jest.fn()
+    sortProducts: jest.fn(),
+    sizeChecked: true,
   };
   const wrapper = shallow(<SideNav {...props} />);
   it('should render three checkboxes inputs for size, price and id', () => {
@@ -13,7 +14,7 @@ describe('SideNav Component', () => {
     expect(wrapper.find('input')).toHaveLength(3);
   });
 
-  it("should take one prop", () => {
-    expect(Object.keys(wrapper.props()).length).toBe(1);
+  it("should take two props", () => {
+    expect(Object.keys(wrapper.props()).length).toBe(2);
   });
 });
