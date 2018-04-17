@@ -4,51 +4,51 @@ const products = [
   {
     id: faker.random.uuid(),
     face: "( .-. )",
-    size: "30px",
-    price: "$30",
-    date: "2 days ago"
+    size: "30",
+    price: "30",
+    date: "Mon Apr 09 2018 22:34:03 GMT+0100 (WAT)",
   },
   {
     id: faker.random.uuid(),
     face: "( .o.)",
-    size: "20px",
-    price: "$40",
-    date: "1 days ago"
+    size: "20",
+    price: "40",
+    date: faker.date.recent(),
   },
   {
     id: faker.random.uuid(),
     face: "( `·´ )",
-    size: "25px",
+    size: "25",
     price: "$10",
-    date: "6 days ago"
+    date: faker.date.recent(),
   },
   {
     id: faker.random.uuid(),
     face: "( ° ͜ ʖ °)",
-    size: "26px",
-    price: "$130",
-    date: "2 days ago"
+    size: "26",
+    price: "130",
+    date: faker.date.recent(),
   },
   {
     id: faker.random.uuid(),
     face: "( ͡° ͜ʖ ͡°)",
-    size: "25px",
-    price: "$310",
-    date: "4 days ago"
+    size: "25",
+    price: "310",
+    date: faker.date.recent(),
   },
   {
     id: faker.random.uuid(),
     face: "( ⚆ _ ⚆ )",
-    size: "40px",
-    price: "$30",
-    date: "2 days ago"
+    size: "40",
+    price: "30",
+    date: faker.date.recent(),
   },
   {
     id: faker.random.uuid(),
     face: "( ︶︿︶)",
-    size: "23px",
-    price: "$40",
-    date: "1 days ago"
+    size: "23",
+    price: "40",
+    date: faker.date.recent(),
   },
   {
     id: faker.random.uuid(),
@@ -60,51 +60,51 @@ const products = [
   {
     id: faker.random.uuid(),
     face: "(\\/)(°,,,°)(\\/)",
-    size: "15px",
-    price: "$130",
-    date: "2 days ago"
+    size: "15",
+    price: "130",
+    date: faker.date.recent(),
   },
   {
     id: faker.random.uuid(),
     face: "(¬_¬)",
-    size: "25px",
-    price: "$310",
-    date: "4 days ago"
+    size: "25",
+    price: "310",
+    date: faker.date.recent(),
   },
   {
     id: faker.random.uuid(),
     face: "(¬º-°)¬",
-    size: "21px",
-    price: "$30",
-    date: "2 days ago"
+    size: "21",
+    price: "30",
+    date: faker.date.recent(),
   },
   {
     id: faker.random.uuid(),
     face: "(¬‿¬)",
-    size: "15px",
-    price: "$40",
-    date: "1 days ago"
+    size: "15",
+    price: "40",
+    date: faker.date.recent(),
   },
   {
     id: faker.random.uuid(),
     face: "(°ロ°)☝",
-    size: "28px",
-    price: "$10",
-    date: "6 days ago"
+    size: "28",
+    price: "10",
+    date: faker.date.recent(),
   },
   {
     id: faker.random.uuid(),
     face: "(´・ω・)っ",
-    size: "35px",
-    price: "$130",
-    date: "2 days ago"
+    size: "35",
+    price: "130",
+    date: faker.date.recent(),
   },
   {
     id: faker.random.uuid(),
     face: "(ó ì_í)",
-    size: "28px",
-    price: "$310",
-    date: "4 days ago"
+    size: "28",
+    price: "310",
+    date: faker.date.recent(),
   },
 ];
 

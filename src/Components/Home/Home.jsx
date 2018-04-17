@@ -4,13 +4,28 @@ import SideNav from '../SideNav/SideNav';
 import ProductCard from '../Products/ProductCard';
 import products from '../../Fixtures/products';
 
+import getProducts from '../../Helpers/ApiManager';
+
 class Home extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      products: products
+      products: [],
+      errors: '',
     };
+  }
+
+  componentWillMount() {
+    getProducts().then((products) => {
+      this.setState({
+        products: products.data
+      });
+    }).catch((err) => {
+      this.setState({
+        errors: err
+      });
+    });
   }
 
   callme() {
