@@ -4,9 +4,14 @@ import SideNav from '../SideNav/SideNav';
 import ProductCard from '../Products/ProductCard';
 import products from '../../Fixtures/products';
 
-import { getProducts, sortProducts } from '../../Helpers/ApiManager';
+import { getPaginatedProducts, getSortedPaginatedProducts } from '../../Helpers/ApiManager';
 
+/**
+ * @class Home
+ * @extends Component
+ */
 class Home extends Component {
+  productContainer;
   constructor(props) {
     super(props);
 
@@ -20,16 +25,28 @@ class Home extends Component {
       price: false,
       id: false,
       isLoading: false,
+      isPreFetchScrollLoading: false,
+      nextPage: 2,
+      preProductsFetched: [],
+      scrolledTop: 0,
+      targetHeight: 181,
+      endOfCatalogue: false,
     };
 
     this.clickHandler = this.clickHandler.bind(this);
+    this.scrollHandler = this.scrollHandler.bind(this);
   }
 
+  /**
+   * componentWillMount Lifecycle method
+   *
+   * @returns {null}
+   */
   componentWillMount() {
     this.setState({
       isLoading: true,
     })
-    getProducts().then((products) => {
+    getPaginatedProducts(1).then((products) => {
       this.setState({
         products: products.data,
         isLoading: false,
@@ -41,38 +58,148 @@ class Home extends Component {
     });
   }
 
-  callme() {
-    console.log('shie')
+  /**
+   * This method handles loading of more products on scroll
+   *
+   * @returns {null}
+   * @param {null}
+   */
+  scrollHandler() {
+    const scrollHeight = this.productContainer.scrollHeight;
+    const clientHeight = this.productContainer.clientHeight;
+    const scrollTop = this.productContainer.scrollTop;
+    const mainScrollTop = this.productContainer.scrollTop - this.state.scrolledTop;
+    
+    const preFetchTargetReached = (mainScrollTop > 181) && (mainScrollTop < 250);
+
+    if (this.state.nextPage < 35 ) {
+      if (preFetchTargetReached && !this.state.isPreFetchScrollLoading) {
+        this.preFetchProducts();
+      }
+  
+      const scrolledToBottom = (scrollHeight - clientHeight) === scrollTop;
+      if (scrolledToBottom) {
+        this.displayMoreProducts(scrollTop);
+      }
+    } else {
+      this.setState({
+        endOfCatalogue: true
+      })
+    }
   }
 
+  /**
+   * This method handles prefetching of products for sorting and normal product display
+   *
+   * @returns {null}
+   * @param {null}
+   */
+  preFetchProducts() {
+    this.setState({
+      isPreFetchScrollLoading: true,
+    });
+
+    if (this.state.size) {
+      this.sortProducts("size");
+    } else if (this.state.price) {
+      this.sortProducts("price");
+    } else if (this.state.id) {
+      this.sortProducts("id");
+    } else {
+      getPaginatedProducts(this.state.nextPage)
+        .then((products) => {
+          this.setState({
+            preProductsFetched: products.data,
+          });
+        })
+        .catch((err) => {
+          this.setState({
+            errors: err
+          });
+        });
+    }
+  }
+
+  /**
+   * This method concatenates products
+   *
+   * @param {number} scrollTop
+   * @returns {null}
+   */
+  displayMoreProducts(scrollTop) {
+    this.setState({
+      isLoading: true,
+    });
+    setTimeout(() => {
+      this.setState({
+        products: [...this.state.products, ...this.state.preProductsFetched],
+        isLoading: false,
+        nextPage: this.state.nextPage + 1,
+        isPreFetchScrollLoading: false,
+        preProductsFetched: [],
+        scrolledTop: scrollTop,
+      });
+    }, 3000);
+  }
+
+  /**
+   * This method handles on click of size, price and id checkboxes
+   *
+   * @param {*} event
+   */
   clickHandler(event) {
+    this.productContainer.scrollTop = 0;
+    const initialState = {
+      size: false,
+      price: false,
+      id: false,
+      isLoading: true,
+      nextPage: 2,
+      scrolledTop: 0,
+      preProductsFetched: [],
+    }
     if (event.target.name === 'size') {
       this.setState({
-        [event.target.name]: true,
-        price: false,
-        id: false,
-        isLoading: true,
+        ...initialState,
+        size: true,
       });
     } else if (event.target.name === 'price') {
       this.setState({
-        [event.target.name]: true,
-        size: false,
-        id: false,
-        isLoading: true,
+        ...initialState,
+        price: true,
       });
     } else {
       this.setState({
-        [event.target.name]: true,
-        size: false,
-        price: false,
-        isLoading: true,
+        ...initialState,
+        id: true,
       });
     }
-    sortProducts(event.target.name)
+    getSortedPaginatedProducts(1, event.target.name)
       .then((products) => {
         this.setState({
           products: products.data,
-          isLoading: false
+          isLoading: false,
+        })
+      })
+      .catch((err) => {
+        this.setState({
+          errors: err
+        });
+      });
+  }
+
+  /**
+   * This method fires the action to get sorted paginated products from the api
+   *
+   * @param {string} sortType
+   * @returns {null}
+   */
+  sortProducts(sortType) {
+    getSortedPaginatedProducts(this.state.nextPage, sortType)
+      .then((products) => {
+        this.setState({
+          preProductsFetched: products.data,
+          isLoading: false,
         })
       })
       .catch((err) => {
@@ -89,6 +216,7 @@ class Home extends Component {
           this.state.isLoading &&
             ( <div className="before-loading">
                 <div className="spin" id="spin3"></div>
+                <span className="loading-text">Loading</span>
               </div> )
         }
         <aside>
@@ -101,7 +229,7 @@ class Home extends Component {
         </aside>
         <section>
           <header>Here you're sure to find a bargain on some of the finest ascii available to purchase. Be sure to peruse our selection of ascii faces in an exciting range of sizes and prices.</header>
-          <div className="product-list" onScroll={this.callme.bind(this)}>
+          <div className="product-list" onScroll={this.scrollHandler} ref={(element) => this.productContainer = element}>
           {
             this.state.products.map((product) => {
               return (
@@ -110,6 +238,7 @@ class Home extends Component {
             })
           }
           </div>
+          { this.state.endOfCatalogue && <span className="end-of-catalogue">~End of Catalogue~</span>}
         </section>
       </main>
     );

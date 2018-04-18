@@ -6,7 +6,7 @@ const products = [
     face: "( .-. )",
     size: "30",
     price: "30",
-    date: "Mon Apr 09 2018 22:34:03 GMT+0100 (WAT)",
+    date: new Date(Date.now()).toLocaleString(),
   },
   {
     id: faker.random.uuid(),

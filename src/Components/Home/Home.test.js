@@ -20,4 +20,13 @@ describe('Home Component', () => {
     wrapper.setState({ isLoading: true });
     expect(wrapper.find('.before-loading').exists()).toBe(true);
   });
+
+  it('should not display end of Catalogue when there are more products', () => {
+    expect(wrapper.find('.end-of-catalogue').exists()).toBe(false);
+  });
+
+  it('should display end of Catalogue when there are no more products', () => {
+    wrapper.setState({ endOfCatalogue: true });
+    expect(wrapper.find('.end-of-catalogue').exists()).toBe(true);
+  });
 });

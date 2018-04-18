@@ -14,7 +14,7 @@ describe('ProductCard Component', () => {
 
     expect(wrapper.find('.product-size').text()).toBe(`Size: ${products[0].size}px`);
     expect(wrapper.find('.product-price').text()).toBe(`Price: $${products[0].price}`);
-    expect(wrapper.find('.product-date').text()).toBe("Added: 7 days ago");
+    expect(wrapper.find('.product-date').text()).toBe("Added: Today");
     expect(wrapper.find('.product-face').text()).toBe(products[0].face);
   });
 });
