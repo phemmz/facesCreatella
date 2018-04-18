@@ -48,12 +48,15 @@ class Home extends Component {
     })
     getPaginatedProducts(1).then((products) => {
       this.setState({
-        products: products.data,
+        products: [...products.data, {
+          adCheck: true,
+          adImgUrl: `/ads/?r=${this.getRandomNumber()}`,
+        }],
         isLoading: false,
       });
     }).catch((err) => {
       this.setState({
-        errors: err
+        errors: err,
       });
     });
   }
@@ -72,7 +75,7 @@ class Home extends Component {
     
     const preFetchTargetReached = (mainScrollTop > 181) && (mainScrollTop < 250);
 
-    if (this.state.nextPage < 35 ) {
+    if (this.state.nextPage < 35) {
       if (preFetchTargetReached && !this.state.isPreFetchScrollLoading) {
         this.preFetchProducts();
       }
@@ -83,7 +86,7 @@ class Home extends Component {
       }
     } else {
       this.setState({
-        endOfCatalogue: true
+        endOfCatalogue: true,
       })
     }
   }
@@ -132,7 +135,10 @@ class Home extends Component {
     });
     setTimeout(() => {
       this.setState({
-        products: [...this.state.products, ...this.state.preProductsFetched],
+        products: [...this.state.products, ...this.state.preProductsFetched, {
+          adCheck: true,
+          adImgUrl: `/ads/?r=${this.getRandomNumber()}`
+        }],
         isLoading: false,
         nextPage: this.state.nextPage + 1,
         isPreFetchScrollLoading: false,
@@ -177,7 +183,10 @@ class Home extends Component {
     getSortedPaginatedProducts(1, event.target.name)
       .then((products) => {
         this.setState({
-          products: products.data,
+          products: [...products.data, {
+            adCheck: true,
+            adImgUrl: `/ads/?r=${this.getRandomNumber()}`
+          }],
           isLoading: false,
         })
       })
@@ -209,6 +218,16 @@ class Home extends Component {
       });
   }
 
+  /**
+   * This method generates a random number that is mutliplied by 1000
+   *
+   * @param {null}
+   * @returns {Number}
+   */
+  getRandomNumber() {
+    return Math.floor(Math.random() * 1000);
+  }
+
   render() {
     return (
       <main className="home-container">
@@ -231,7 +250,10 @@ class Home extends Component {
           <header>Here you're sure to find a bargain on some of the finest ascii available to purchase. Be sure to peruse our selection of ascii faces in an exciting range of sizes and prices.</header>
           <div className="product-list" onScroll={this.scrollHandler} ref={(element) => this.productContainer = element}>
           {
-            this.state.products.map((product) => {
+            this.state.products.map((product, index) => {
+              if (product.adCheck) {
+                return <img key={index} className="product-card" src={product.adImgUrl} alt="ad Image" />
+              }
               return (
                 <ProductCard key={product.id} product={product} />
               );
