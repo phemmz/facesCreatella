@@ -87,7 +87,7 @@ class Home extends Component {
     } else {
       this.setState({
         endOfCatalogue: true,
-      })
+      });
     }
   }
 
@@ -117,7 +117,7 @@ class Home extends Component {
         })
         .catch((err) => {
           this.setState({
-            errors: err
+            errors: err,
           });
         });
     }
@@ -163,7 +163,7 @@ class Home extends Component {
       nextPage: 2,
       scrolledTop: 0,
       preProductsFetched: [],
-    }
+    };
     if (event.target.name === 'size') {
       this.setState({
         ...initialState,
@@ -209,11 +209,11 @@ class Home extends Component {
         this.setState({
           preProductsFetched: products.data,
           isLoading: false,
-        })
+        });
       })
       .catch((err) => {
         this.setState({
-          errors: err
+          errors: err,
         });
       });
   }

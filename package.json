@@ -5,9 +5,9 @@
   "description": "Build a grid of product items and ads",
   "main": "server/index.js",
   "scripts": {
-    "start": "json-server server/index.js --routes server/routes.json --middlewares server/handle-delay.js server/handle-ads.js",
+    "start": "npm run build && json-server server/index.js --routes server/routes.json --middlewares server/handle-delay.js server/handle-ads.js",
     "test": "jest",
-    "build": "webpack --config webpack.config.js --watch"
+    "build": "webpack --config webpack.config.js"
   },
   "author": "",
   "license": "",
